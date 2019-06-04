@@ -1,46 +1,60 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <title>어머니!시간을 구해라!</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>어머니!시간을 구해라!</title>
+  <style>
+  body{
+    padding:0 10px;
+  }
+  p{
+    font-size:1rem;
+  }
+  a{
+    font-size:1.4rem;
+    text-decoration: none;
+    border:2px solid #333;
+    border-radius: 0.2rem;
+    display: inline-block;
+    padding:4px 10px 0px 10px;
+  }
+  #q{
+    border:2px solid #333;
+    width:100%;
+    font-size:2rem;
+  }
+  </style>
 </head>
 <body>
-<input type="text" id="urltext" class="txtSearch" value="" placeholder="urltext"> 
+<input type="text" id="q" name="q" class="txtSearch" value="" placeholder="생각하지 않고 살면 사는데로 생각하게 된다"> 
 <p>생각하지 않고 살면 사는데로 생각하게 된다</p>
 <a href="https://trello.com/b/rsqtptpT/%EC%97%B0%EA%B5%AC%EC%9B%90">연구원</a>
-<a href="https://sports.news.naver.com"></a>스포츠</a>
+<a href="https://sports.news.naver.com">스포츠</a>
 <a href="http://danawa.com/">가격비교</a>
+<a href="https://aws.amazon.com/ko/">AWS</a>
 
-<label for="url">Enter an https:// URL:</label>
-
-<input type="url" name="url" id="url"
-       placeholder="https://example.com"
-       pattern="https://.*" size="30"
-       required>
-
-<script>
+<script type="text/javascript">
 document.addEventListener("DOMContentLoaded", function(){
-  document.getElementById("urltext").focus();
-  document.querySelector('#urltext').addEventListener('keypress', function (e) {
-      var key = e.which || e.keyCode;
-      if (key === 13) { // 13 is enter
-        //todo: 검색히스토리 로컬스토리지
-        var u;
-        var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
-        var regex = new RegExp(expression);
-        var t = this.value;
+  var q = document.querySelector('#q');
+  q.focus();
+  q.addEventListener('keypress', function (e) {
+    var key = e.which || e.keyCode;
+    if (key === 13) { // 13 is enter
+      //todo: 검색히스토리 로컬스토리지
+      var u;
+      var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+      var regex = new RegExp(expression);
+      var t = this.value;
 
-        if (t.match(regex)) {
-          //todo: http 시작유무
-          u = "http://"+t;
-        } else {
-          u = "https://www.google.com/search?q="+t;
-        }
-        
-        location.href=u;
+      if (t.match(regex)) {
+        //todo: http 시작유무
+        u = "http://"+t;
+      } else {
+        u = "https://www.google.com/search?q="+t;
+      }
+      location.href = encodeURI(u);
       }
   });
 
