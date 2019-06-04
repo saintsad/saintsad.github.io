@@ -19,6 +19,12 @@
     border-radius: 0.2rem;
     display: inline-block;
     padding:4px 10px 0px 10px;
+    margin-bottom:4px;
+  }
+  a span{
+    display:inline-block;
+    font-size:0.6em;
+    padding-left:2px;
   }
   #q{
     border:2px solid #333;
@@ -30,10 +36,10 @@
 <body>
 <input type="text" id="q" name="q" class="txtSearch" value="" placeholder="생각하지 않고 살면 사는데로 생각하게 된다"> 
 <p>생각하지 않고 살면 사는데로 생각하게 된다</p>
-<a href="https://trello.com/b/rsqtptpT/%EC%97%B0%EA%B5%AC%EC%9B%90">연구원</a>
-<a href="https://sports.news.naver.com">스포츠</a>
-<a href="http://danawa.com/">가격비교</a>
-<a href="https://aws.amazon.com/ko/">AWS</a>
+<a href="https://trello.com/b/rsqtptpT/%EC%97%B0%EA%B5%AC%EC%9B%90" title="연구원">연구원</a>
+<a href="https://sports.news.naver.com" title="스포츠">스포츠</a>
+<a href="http://danawa.com/" title="가격비교">가격비교</a>
+<a href="https://aws.amazon.com/ko/" title="AWS">AWS</a>
 
 <script type="text/javascript">
 document.addEventListener("DOMContentLoaded", function(){
@@ -53,10 +59,40 @@ document.addEventListener("DOMContentLoaded", function(){
         u = "http://"+t;
       } else {
         u = "https://www.google.com/search?q="+t;
-      }
+      } 
       location.href = encodeURI(u);
       }
   });
+
+  var x = document.getElementsByTagName("A");
+  for(var i=0; i<x.length;i++){
+    var item = x.item(i);
+    var cnt = localStorage.getItem(item.getAttribute("title"));
+    var tn = document.createElement('span');
+    var tnt = document.createTextNode('('+cnt+')');
+    tn.appendChild(tnt); 
+    item.appendChild(tn);
+    item.addEventListener('click', function (e) {
+      var count = localStorage.getItem(this.getAttribute("title"));
+      count++;
+      localStorage.setItem(this.getAttribute("title"),count); 
+      e.preventDefault();
+
+    });
+    
+  }
+  
+
+  //document.querySelectorAll("a")
+  //console.log(x.length);
+
+  //var sections = document.querySelectorAll("#sections , #sections .section");
+  //console.log(sections.constructor.name)
+  //for( var i = 0; i < sections.length; i++ ){
+  //    var item = sections.item(i);
+  //    item.style.border = "1px solid #ff0000";
+  //}
+
 
 });
 
