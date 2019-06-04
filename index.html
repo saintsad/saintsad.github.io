@@ -68,10 +68,13 @@ document.addEventListener("DOMContentLoaded", function(){
   for(var i=0; i<x.length;i++){
     var item = x.item(i);
     var cnt = localStorage.getItem(item.getAttribute("title"));
-    var tn = document.createElement('span');
-    var tnt = document.createTextNode('('+cnt+')');
-    tn.appendChild(tnt); 
-    item.appendChild(tn);
+    if(cnt){
+      var tn = document.createElement('span');
+      var tnt = document.createTextNode('('+cnt+')');
+      tn.appendChild(tnt); 
+      item.appendChild(tn);
+    }
+
     item.addEventListener('click', function (e) {
       var count = localStorage.getItem(this.getAttribute("title"));
       count++;
