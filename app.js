@@ -18,17 +18,23 @@ document.addEventListener("DOMContentLoaded", function(){
         //profile_picture : imageUrl
       });
     }
-  
-    // Initialize Firebase 
-    var config = {
+
+
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
       apiKey: "AIzaSyDFaZyYP-NBCEaNYHjMKQlfHtJVphQR63E",
       authDomain: "startpage-f214e.firebaseapp.com",
       databaseURL: "https://startpage-f214e.firebaseio.com",
       projectId: "startpage-f214e",
-      //storageBucket: "<BUCKET>.appspot.com",
-      //messagingSenderId: "<SENDER_ID>",
+      storageBucket: "startpage-f214e.appspot.com",
+      messagingSenderId: "496858740873",
+      appId: "1:496858740873:web:be5d1e1fab4e562b"
     };
-    firebase.initializeApp(config);
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+
+
   
     // console.log(firebase.app().name);
     var database = firebase.database();
