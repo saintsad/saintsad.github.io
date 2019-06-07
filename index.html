@@ -41,6 +41,46 @@
 <a href="http://danawa.com/" title="가격비교">가격비교</a>
 <a href="https://aws.amazon.com/ko/" title="AWS">AWS</a>
 
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script>
+<script>
+  function writeUserData(userId, name, email) {
+    firebase.database().ref('users/' + userId).set({
+      username: name,
+      email: email,
+      //profile_picture : imageUrl
+    });
+  }
+
+  function insetKeyword(keyword) {
+    firebase.database().ref('keywords/' + keyword).set({
+      //datetime: Firebase.ServerValue.TIMESTAMP,
+      count: 1,
+      //username: name,
+      //email: email,
+      //profile_picture : imageUrl
+    });
+  }
+
+  // Initialize Firebase 
+  var config = {
+    apiKey: "AIzaSyDFaZyYP-NBCEaNYHjMKQlfHtJVphQR63E",
+    authDomain: "startpage-f214e.firebaseapp.com",
+    databaseURL: "https://startpage-f214e.firebaseio.com",
+    projectId: "startpage-f214e",
+    //storageBucket: "<BUCKET>.appspot.com",
+    //messagingSenderId: "<SENDER_ID>",
+  };
+  firebase.initializeApp(config);
+
+  // console.log(firebase.app().name);
+  var database = firebase.database();
+  // console.log(defaultDatabase);
+  //console.log(firebase.auth().currentUser.uid);
+  writeUserData('saintsad','Ham dong wook','saintsad@gmail.com')
+  insetKeyword('fds');
+
+</script>
+
 <script type="text/javascript">
 document.addEventListener("DOMContentLoaded", function(){
   var q = document.querySelector('#q');
@@ -59,7 +99,9 @@ document.addEventListener("DOMContentLoaded", function(){
         u = "http://"+t;
       } else {
         u = "https://www.google.com/search?q="+t;
+        insetKeyword(t);
       } 
+      
       location.href = encodeURI(u);
       }
   });
