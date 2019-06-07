@@ -1,0 +1,25 @@
+body{
+    padding:0 10px;
+  }
+  p{
+    font-size:1rem;
+  }
+  a{
+    font-size:1.4rem;
+    text-decoration: none;
+    border:2px solid #333;
+    border-radius: 0.2rem;
+    display: inline-block;
+    padding:4px 10px 0px 10px;
+    margin-bottom:4px;
+  }
+  a span{
+    display:inline-block;
+    font-size:0.6em;
+    padding-left:2px;
+  }
+  #q{
+    border:2px solid #333;
+    width:100%;
+    font-size:2rem;
+  }
