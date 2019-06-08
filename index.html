@@ -4,18 +4,301 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>어머니!시간을 구해라!</title>
-<link rel="stylesheet" type="text/css" href="./style.css" />
+  <title>어머니! 시간을 구해라!</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" type="text/css" href="./style.css" />
+  <!-- <link rel="manifest" href="manifest.json"/> -->
 </head>
 <body>
   <input type="text" id="q" name="q" class="txtSearch" value="" placeholder="감사하며 살기" autocomplete="off"> 
-  <p>어머니 정임씨 가족 감사하며 살기 생각하지 않고 살면 사는데로 생각하게 된다</p>
+  <p>어머니 가족 감사하며 살기 생각하지 않고 살면 사는데로 생각하게 된다</p>
   <a href="https://trello.com/b/rsqtptpT/%EC%97%B0%EA%B5%AC%EC%9B%90" title="연구원">연구원</a>
   <a href="https://sports.news.naver.com" title="스포츠">스포츠</a>
   <a href="http://danawa.com/" title="가격비교">가격비교</a>
   <a href="https://aws.amazon.com/ko/" title="AWS">AWS</a>
+  
 
+
+
+  
+
+
+
+    <!-- 로그인 화면 및 가입화면 영역 -->
+    <div id="dvAuth">
+      <div id="dvLogin">
+          <h5>로그인</h5>
+          <div id="dvSocial">
+              <ul class="btnGroup">
+                  <li id="liGoogleBtn" class="waves-effect waves-teal btn-flat"><i></i>구글 계정으로 가입 및 로그인</li>
+                  <li id="liFacebookBtn" class="waves-effect waves-teal btn-flat"><i></i>페이스북 계정으로 가입 및 로그인</li>
+              </ul>
+              <em class="or">or</em>
+          </div>
+          <div id="dvEmail">
+              <input type="email" id="userName" name="userName" class="input-text" placeholder="이메일 아이디">
+              <input type="password" id="password" name="password" class="input-text" maxlength="17" placeholder="비밀번호">
+              <ul class="btnGroup">
+                  <li id="liEmailBtn" class="waves-effect waves-teal btn-flat">이메일으로 로그인</li>
+              </ul>
+              <ul class="btnGroup">
+                  <li id="liEmailJoin" class="waves-effect waves-teal btn-flat">이메일으로 가입</li>
+              </ul>
+          </div>
+      </div>
+      <div id="dvJoin">
+          <h5>이메일 가입</h5>
+          <input type="text" id="joinUserName" name="userName" class="input-text" placeholder="이름">
+          <input type="email" id="joinUserEmail" name="userName" class="input-text" placeholder="이메일 아이디">
+          <input type="password" id="joinPassword" name="password" class="input-text" maxlength="17" placeholder="비밀번호">
+          <input type="password" id="joinRePassword" class="input-text" maxlength="17" placeholder="비밀번호 확인">
+          <ul class="btnGroup">
+              <li id="liEmailJoinSubmit" class="waves-effect waves-teal btn-flat">이메일으로 가입</li>
+          </ul>
+      </div>
+    </div>
+    <!-- Modal 영역 -->
+    <div id="dnModal" class="modal col s4">
+        <div class="modal-content">
+            <h5>업로드</h5>
+            <div class="progress">
+                <div id="dvProgressBar" class="determinate"></div>
+                <div id="dvFileName"></div>
+            </div>
+        </div>
+    </div>
+    <div id="dvAddUser" class="modal">
+        <div class="modal-content">
+          <h5>초대</h5>
+          <ul id="ulAddUserList" class="collection">
+          </ul>
+        </div>
+        <div class="modal-footer">
+            <a id="aConfirmInvite" href="#!" class="modal-action modal-close waves-effect waves-green btn blue white-text">추가</a>
+        </div>
+    </div>
+    <!-- template 영역 -->
+    <!-- template 유저리스트 영역 -->
+    <script type="text/template" id="templateUserList">
+            <li id="li<%=targetUserUid %>" data-targetUserUid="<%=targetUserUid %>" data-username="<%=userName %>" class="collection-item avatar list">
+                <img src="<%=profileImg ? profileImg : 'img/noprofile.png'  %>" alt="" class="circle">
+                <span class="title"><%=userName %></span>
+                <span class="small material-icons right hiddendiv done">done</span>
+                <span class="small material-icons right hiddendiv mood yellow-text">mood</span>
+            </li>
+    </script>
+    <!-- template 메세지리스트 영역 -->
+    <script type="text/template" id="templateMessageList">
+        <li id="li<%=key%>" class="collection-item avatar" data-key="<%=key%>">
+            <img src="<%=profileImg ? profileImg : 'img/noprofile.png'  %>" alt="" class="circle">
+            <span class="title"><%=userName %></span><span class="time"><%=time %></span>
+            <p><%=message %></p>
+        </li>
+    </script>
+    <!-- template 채팅방리스트 영역 -->
+    <script type="text/template" id="templateRoomList">
+        <li id="liRoom<%=roomId %>" data-roomId="<%=roomId %>" data-roomTitle='<%=roomTitle%>' data-roomUserName="<%=roomUserName%>"
+            data-roomType="<%=roomType%>" data-roomOneVSOneTarget="<%=roomOneVSOneTarget%>" data-roomUserlist="<%=roomUserlist %>" class="collection-item avatar" >
+            <img src="<%=profileImg ? profileImg : 'img/noprofile.png'  %>" alt="" class="circle">
+            <span class="title"><%=roomTitle%></span>
+            <p><%=lastMessage %></p>
+            <a href="#!" class="secondary-content"> <%=datetime %></a>
+        </li>
+    </script>
+
+
+
+
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+  
   <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script>
-  <script src="./app.js"></script>
+  <script src="./init.js"></script>
+  <script>
+function FirebaseChat(){
+  this.init();
+  this.initEvent();
+}
+
+FirebaseChat.prototype.init = function(){
+  this.auth = firebase.auth();
+  this.liGoogleBtn = document.getElementById('liGoogleBtn');
+  this.dvAuth = document.getElementById('dvAuth');
+}
+
+FirebaseChat.prototype.initEvent = function(){
+  this.liGoogleBtn.addEventListener('click', this.onGoogleBtnClick.bind(this));
+  this.auth.onAuthStateChanged(this.onAuthChange.bind(this));
+}
+
+FirebaseChat.prototype.onGoogleBtnClick = function(){
+  var googleProvider = new firebase.auth.GoogleAuthProvider();
+  //local session none
+  this.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
+    .then(this.signInWithPopup.bind(this, googleProvider))
+    .catch(function(error){
+      console.error('인증 상태 설정 중 에러 발생', error);
+    });
+
+  // this.auth.signInWithPopup(googleProvider).then(function(resutl){
+  //   console.log('로그인 성공')
+  // }).catch(function(error){
+  //   alert('로그인에 실패하였습니다');
+  //   console.error('구글 로그인 과정 에러',error);
+  // });
+
+}
+
+FirebaseChat.prototype.signInWithPopup = function(provider){
+  var cbSignIn = function(result){
+    console.log('로그인 성공')
+  }
+
+  return this.auth.signWithPopup(provider).then(cbSignIn.bind(this)).catch(function(error){
+    alert('로그인에 실패하였습나다');
+    console.error('로그인 에러',error);
+  })
+
+}
+
+FirebaseChat.prototype.onAuthChange = function(user){
+  if(user){
+    console.log('user로그인:', JSON.stringify(user));
+    this.setLogIn();
+  }else{
+    console.log('로그아웃');
+    this.setLogOut();
+  }
+}
+
+FirebaseChat.prototype.setLogIn = function(){
+  this.database = firebase.database();
+  this.database.goOnline();
+  this.dvAuth.style.display = 'none';
+}
+
+FirebaseChat.prototype.setLogOut = function(){
+  this.dvAuth.style.display = 'blcok';
+  this.dvJoin.style.display = 'none';
+  this.dvLogIn.style.display = 'block';
+}
+
+function writeUserData(userId, name, email) {
+  firebase.database().ref('users/' + userId).set({
+    username: name,
+    email: email,
+    //profile_picture : imageUrl
+  });
+}
+  
+function insetKeyword(keyword) {
+  firebase.database().ref('keywords/' + keyword).set({
+    //datetime: Firebase.ServerValue.TIMESTAMP,
+    count: 1,
+    //username: name,
+    //email: email,
+    //profile_picture : imageUrl
+  });
+}
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function(){
+  
+  window.fbChat = new FirebaseChat();
+
+  //다운로드 프로그레스 팝업 modal 설정
+  $('#dnModal').modal();
+  //채팅방 초대 modal 설정
+  $('#dvAddUser').modal();
+
+  // if(navigator.serviceWorker){
+  //   navigator.serviceWorker.register('/firebase-messaging-sw.js')
+  //       .then(function(reg){console.log('서비스워커 등록성공 :', reg)})
+  //       .catch(function(error){console.log('서비스워커 등록실패 :', error)});
+  // }
+
+
+
+
+
+
+
+
+
+
+
+  
+    // console.log(firebase.app().name);
+    var database = firebase.database();
+    // console.log(defaultDatabase);
+    // console.log(firebase.auth().currentUser.uid);
+    // writeUserData('saintsad','Ham dong wook','saintsad@gmail.com')
+    // insetKeyword('fds');
+  
+  
+  
+    var q = document.querySelector('#q');
+    q.focus();
+    q.addEventListener('keypress', function (e) {
+      var key = e.which || e.keyCode;
+      if (key === 13) { // 13 is enter
+        //todo: 검색히스토리 로컬스토리지
+        var u;
+        var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+        var regex = new RegExp(expression);
+        var t = this.value;
+  
+        if (t.match(regex)) {
+          //todo: http 시작유무
+          u = "http://"+t;
+        } else {
+          u = "https://www.google.com/search?q="+t;
+          insetKeyword(t);
+        } 
+        
+        location.href = encodeURI(u);
+        }
+    });
+  
+    var x = document.getElementsByTagName("A");
+    for(var i=0; i<x.length;i++){
+      var item = x.item(i);
+      var cnt = localStorage.getItem(item.getAttribute("title"));
+      if(cnt){
+        var tn = document.createElement('span');
+        var tnt = document.createTextNode('('+cnt+')');
+        tn.appendChild(tnt); 
+        item.appendChild(tn);
+      }
+  
+      item.addEventListener('click', function (e) {
+        var count = localStorage.getItem(this.getAttribute("title"));
+        count++;
+        localStorage.setItem(this.getAttribute("title"),count); 
+        //e.preventDefault();
+  
+      });
+      
+    }
+    
+    //document.querySelectorAll("a")
+    //console.log(x.length);
+  
+    //var sections = document.querySelectorAll("#sections , #sections .section");
+    //console.log(sections.constructor.name)
+    //for( var i = 0; i < sections.length; i++ ){
+    //    var item = sections.item(i);
+    //    item.style.border = "1px solid #ff0000";
+    //}
+  
+  
+});  
+  
+  </script>
 </body>
 </html>

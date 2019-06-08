@@ -1,5 +1,43 @@
-document.addEventListener("DOMContentLoaded", function(){
+function FirebaseChat(){
+  this.init();
+  this.initEvent();
+}
 
+FirebaseChat.prototype.init = function(){
+  // this.auth = firebase.auth();
+  // this.liGoogleBtn = document.getElementById('liGoogleBtn');
+}
+
+FirebaseChat.prototype.initEvent = function(){
+  // this.liGoogleBtn.addEventListener('click', this.onGoogleBtnClick.bin(this));
+  // this.auth.onAuthStateChanged(this.onAuthChange.bind(this));
+}
+
+FirebaseChat.prototype.onGoogleBtnClick = function(){
+  //var googleProvider = new firebase.auth.GoogleAuthProvider();
+
+}
+
+
+document.addEventListener("DOMContentLoaded", function(){
+  
+  window.fbChat = new FirebaseChat();
+
+  //다운로드 프로그레스 팝업 modal 설정
+  $('#dnModal').modal();
+  //채팅방 초대 modal 설정
+  $('#dvAddUser').modal();
+
+
+
+
+
+  
+  // if(navigator.serviceWorker){
+  //   navigator.serviceWorker.register('/firebase-messaging-sw.js')
+  //       .then(function(reg){console.log('서비스워커 등록성공 :', reg)})
+  //       .catch(function(error){console.log('서비스워커 등록실패 :', error)});
+  // }
 
     function writeUserData(userId, name, email) {
       firebase.database().ref('users/' + userId).set({
@@ -20,18 +58,7 @@ document.addEventListener("DOMContentLoaded", function(){
     }
 
 
-    // Your web app's Firebase configuration
-    var firebaseConfig = {
-      apiKey: "AIzaSyDFaZyYP-NBCEaNYHjMKQlfHtJVphQR63E",
-      authDomain: "startpage-f214e.firebaseapp.com",
-      databaseURL: "https://startpage-f214e.firebaseio.com",
-      projectId: "startpage-f214e",
-      storageBucket: "startpage-f214e.appspot.com",
-      messagingSenderId: "496858740873",
-      appId: "1:496858740873:web:be5d1e1fab4e562b"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+
 
 
 
@@ -89,7 +116,6 @@ document.addEventListener("DOMContentLoaded", function(){
       
     }
     
-  
     //document.querySelectorAll("a")
     //console.log(x.length);
   
