@@ -156,7 +156,7 @@ FirebaseChat.prototype.signInWithPopup = function(provider){
     console.log('로그인 성공')
   }
 
-  return this.auth.signWithPopup(provider).then(cbSignIn.bind(this)).catch(function(error){
+  return this.auth.signInWithPopup(provider).then(cbSignIn.bind(this)).catch(function(error){
     alert('로그인에 실패하였습나다');
     console.error('로그인 에러',error);
   })
