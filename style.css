@@ -2,7 +2,7 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
-    overflow:hidden;
+    /* overflow:hidden; */
     margin:0;
     padding:0;
 }
@@ -12,7 +12,7 @@ header{
 main {
     display:flex;
     flex: 1 0 calc(100vh - 120px);
-    overflow:hidden;
+    /* overflow:hidden; */
 }
 main .tabContents{
     width:100%;
