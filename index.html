@@ -18,13 +18,8 @@
   <a href="http://danawa.com/" title="가격비교">가격비교</a>
   <a href="https://aws.amazon.com/ko/" title="AWS">AWS</a>
   
-
-
-<ul id="ulUserList"></ul>
+<ul id="ulKeywordList"></ul>
   
-
-
-
     <!-- 로그인 화면 및 가입화면 영역 -->
     <div id="dvAuth">
       <div id="dvLogin">
@@ -132,7 +127,7 @@ FirebaseChat.prototype.init = function(){
   this.auth = firebase.auth();
   this.liGoogleBtn = document.getElementById('liGoogleBtn');
   this.dvAuth = document.getElementById('dvAuth');
-  this.ulUserList = document.getElementById('ulUserList');
+  this.ulKeywordList = document.getElementById('ulKeywordList');
 }
 
 FirebaseChat.prototype.initEvent = function(){
@@ -211,7 +206,7 @@ FirebaseChat.prototype.getUserList = function(snapshot){
     }
   }
   snapshot.forEach(cbDisplayUserList.bind(this));
-  this.ulUserList.innerHTML = userListHtml;
+  this.ulKeywordList.innerHTML = userListHtml;
 }
 
 
