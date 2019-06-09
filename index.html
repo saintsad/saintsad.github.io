@@ -20,7 +20,7 @@
   
 
 
-
+<ul id="ulUserList"></ul>
   
 
 
@@ -79,6 +79,12 @@
         </div>
     </div>
     <!-- template 영역 -->
+    <script type="text/template" id="templateKeywordList">
+      <li class="collection-item avatar list">
+        <%=keyword %>
+      </li>
+    </script>
+
     <!-- template 유저리스트 영역 -->
     <script type="text/template" id="templateUserList">
             <li id="li<%=targetUserUid %>" data-targetUserUid="<%=targetUserUid %>" data-username="<%=userName %>" class="collection-item avatar list">
@@ -126,6 +132,7 @@ FirebaseChat.prototype.init = function(){
   this.auth = firebase.auth();
   this.liGoogleBtn = document.getElementById('liGoogleBtn');
   this.dvAuth = document.getElementById('dvAuth');
+  this.ulUserList = document.getElementById('ulUserList');
 }
 
 FirebaseChat.prototype.initEvent = function(){
@@ -136,7 +143,7 @@ FirebaseChat.prototype.initEvent = function(){
 FirebaseChat.prototype.onGoogleBtnClick = function(){
   var googleProvider = new firebase.auth.GoogleAuthProvider();
   //local session none
-  this.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
+  this.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
     .then(this.signInWithPopup.bind(this, googleProvider))
     .catch(function(error){
       console.error('인증 상태 설정 중 에러 발생', error);
@@ -177,6 +184,7 @@ FirebaseChat.prototype.setLogIn = function(){
   this.database = firebase.database();
   this.database.goOnline();
   this.dvAuth.style.display = 'none';
+  this.loadUserList();
 }
 
 FirebaseChat.prototype.setLogOut = function(){
@@ -184,6 +192,31 @@ FirebaseChat.prototype.setLogOut = function(){
   this.dvJoin.style.display = 'none';
   this.dvLogIn.style.display = 'block';
 }
+
+FirebaseChat.prototype.loadUserList = function(){
+  this.keywordTemplate = document.getElementById('templateKeywordList').innerHTML;
+  var userRef = this.database.ref('keywords');
+  userRef.off();
+  //userRef.orderByChild("userName").once('value',this.getUserList.bind(this));
+  userRef.once('value',this.getUserList.bind(this));
+}
+
+FirebaseChat.prototype.getUserList = function(snapshot){
+  var userListHtml = '';
+  var cbDisplayUserList = function(data){
+    var val = data.val();
+    if(data.key !== this.auth.currentUser.uid){
+      userListHtml += _.template(this.keywordTemplate)({keyword: data.key});
+      //userListHtml += '-'+data.key;
+    }
+  }
+  snapshot.forEach(cbDisplayUserList.bind(this));
+  this.ulUserList.innerHTML = userListHtml;
+}
+
+
+
+
 
 function writeUserData(userId, name, email) {
   firebase.database().ref('users/' + userId).set({
@@ -234,7 +267,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
   
     // console.log(firebase.app().name);
-    var database = firebase.database();
+    // var database = firebase.database();
     // console.log(defaultDatabase);
     // console.log(firebase.auth().currentUser.uid);
     // writeUserData('saintsad','Ham dong wook','saintsad@gmail.com')
